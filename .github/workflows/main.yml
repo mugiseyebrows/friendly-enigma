@@ -1,0 +1,26 @@
+name: main
+on: [push]
+jobs:
+  main:
+    runs-on: windows-2022
+    steps:
+    - name: 
+      shell: cmd
+      run: |
+        set PATH=C:\Miniconda;C:\Miniconda\Scripts;%PATH%
+        pip install aqtinstall
+        aqt install-qt windows desktop 5.11.3 win32_mingw53 --archives qtbase qtserialport qtsvg
+        aqt install-tool windows desktop tools_mingw qt.tools.win32_mingw530
+        aqt install-tool windows desktop tools_qtcreator qt.tools.qtcreator
+    - uses: actions/upload-artifact@v3
+      with:
+        name: 5.11.3
+        path: 5.11.3
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Tools-mingw530_32
+        path: Tools/mingw530_32
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Tools-QtCreator
+        path: Tools/QtCreator
