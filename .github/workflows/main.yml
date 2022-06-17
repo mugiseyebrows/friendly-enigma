@@ -23,7 +23,7 @@ jobs:
         rmdir /q /s Qt
         mkdir Qt
         pushd Qt
-          (base) E:\aqt3>aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
+          aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810
         popd
         7z a mingw810.7z Qt        
     - uses: ncipollo/release-action@v1
