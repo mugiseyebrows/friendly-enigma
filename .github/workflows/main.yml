@@ -1,5 +1,7 @@
 name: main
-on: [push]
+on:
+  push:
+    tags: '*'
 jobs:
   main:
     runs-on: windows-2022
@@ -11,26 +13,11 @@ jobs:
         pip install aqtinstall
         mkdir Qt
         pushd Qt
-          aqt install-qt windows desktop 5.11.3 win32_mingw53
+          aqt install-tool windows desktop tools_qtcreator qt.tools.qtcreator
         popd
-        7z a 5.11.3.7z Qt
-        rmdir /q /s Qt
-        mkdir Qt
-        pushd Qt
-          aqt install-doc windows 5.11.3
-        popd
-        7z a Docs.7z Qt
-        rmdir /q /s Qt
-        mkdir Qt
-        pushd Qt
-          aqt install-tool windows desktop tools_mingw qt.tools.win32_mingw530
-        popd
-        7z a mingw530.7z Qt        
+        7z a QtCreator.7z Qt     
     - uses: ncipollo/release-action@v1
       if: startsWith( github.ref, 'refs/tags/')
       with:
-        artifacts: |
-          5.11.3.7z
-          Docs.7z
-          mingw530.7z
+        artifacts: QtCreator.7z
         token: ${{ secrets.GITHUB_TOKEN }}
