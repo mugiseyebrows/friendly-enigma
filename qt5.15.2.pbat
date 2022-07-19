@@ -1,0 +1,20 @@
+def main
+    set_path(C:\Program Files\Git\mingw64\bin,C:\Program Files\7-Zip,%PATH%)
+    download(https://github.com/mugiseyebrows/friendly-enigma/releases/download/qt5.15.2/5.15.2.7z, 5.15.2.7z)
+    download(https://github.com/mugiseyebrows/friendly-enigma/releases/download/qt5.15.2/Docs.7z, Docs.7z)
+    download(https://github.com/mugiseyebrows/friendly-enigma/releases/download/qt5.15.2/mingw810.7z, mingw810.7z)
+    download(https://github.com/mugiseyebrows/friendly-enigma/releases/download/qtcreator/QtCreator.7z, QtCreator.7z)
+    download(https://aka.ms/vs/17/release/vc_redist.x64.exe, vc_redist.x64.exe)
+    download(https://github.com/mugiseyebrows/qwt-builds/releases/download/qwt6.2.0-qt5.15.2/qwt6.2.0-qt5.15.2-mingw8.1.0-x86_64.zip, qwt6.2.0-qt5.15.2-mingw8.1.0-x86_64.zip)
+    download(https://github.com/mugiseyebrows/qsqlmysql-builds/releases/download/5.15.2/qsqlmysql-qt5.15.2-mingw8.1.0-x86_64.zip, qsqlmysql-qt5.15.2-mingw8.1.0-x86_64.zip)
+    7z x -y -oC:\ 5.15.2.7z
+    7z x -y -oC:\ Docs.7z
+    7z x -y -oC:\ mingw810.7z
+    7z x -y -oC:\ QtCreator.7z
+    7z x -y -oC:\ qwt6.2.0-qt5.15.2-mingw8.1.0-x86_64.zip
+    7z x -y qsqlmysql-qt5.15.2-mingw8.1.0-x86_64.zip
+    copy qsqlmysql-qt5.15.2-mingw8.1.0-x86_64\* C:\qt\5.15.2\mingw81_64\plugins\sqldrivers
+    rmdir /q /s qsqlmysql-qt5.15.2-mingw8.1.0-x86_64
+    vc_redist.x64.exe /q /norestart
+    
+curl_in_path true
