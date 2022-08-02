@@ -13,11 +13,20 @@ jobs:
         pip install aqtinstall
         mkdir Qt
         pushd Qt
-          aqt install-tool windows desktop tools_qtcreator qt.tools.qtcreator
+          aqt install-tool windows desktop tools_vcredist qt.tools.vcredist_msvc2019_x86
         popd
-        7z a QtCreator.7z Qt     
+        7z a vcredist_msvc2019_x86.7z Qt
+        rmdir /q /s Qt
+        mkdir Qt
+        pushd Qt
+          aqt install-tool windows desktop tools_vcredist qt.tools.vcredist_msvc2019_x64
+        popd
+        7z a vcredist_msvc2019_x64.7z Qt
+        rmdir /q /s Qt
     - uses: ncipollo/release-action@v1
       if: startsWith( github.ref, 'refs/tags/')
       with:
-        artifacts: QtCreator.7z
+        artifacts: |
+          vcredist_msvc2019_x86.7z
+          vcredist_msvc2019_x64.7z
         token: ${{ secrets.GITHUB_TOKEN }}
