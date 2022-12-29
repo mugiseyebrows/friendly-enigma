@@ -1,7 +1,5 @@
 name: main
-on:
-  push:
-    tags: '*'
+on: [push]
 jobs:
   main:
     runs-on: windows-2022
@@ -11,22 +9,20 @@ jobs:
       run: |
         set PATH=C:\Miniconda;C:\Miniconda\Scripts;%PATH%
         pip install aqtinstall
-        mkdir Qt
-        pushd Qt
-          aqt install-tool windows desktop tools_vcredist qt.tools.vcredist_msvc2019_x86
-        popd
-        7z a vcredist_msvc2019_x86.7z Qt
-        rmdir /q /s Qt
-        mkdir Qt
-        pushd Qt
-          aqt install-tool windows desktop tools_vcredist qt.tools.vcredist_msvc2019_x64
-        popd
-        7z a vcredist_msvc2019_x64.7z Qt
-        rmdir /q /s Qt
-    - uses: ncipollo/release-action@v1
-      if: startsWith( github.ref, 'refs/tags/')
+        aqt install-qt windows desktop 5.15.2 win64_mingw81 -O C:\Qt
+        7z a -mx1 5.15.2.7z C:\Qt
+        rmdir /q /s C:\Qt
+        aqt install-doc windows 5.15.2 -O C:\Qt
+        7z a -mx1 5.15.2-Docs.7z C:\Qt
+        rmdir /q /s C:\Qt
+        aqt install-tool windows desktop tools_mingw qt.tools.win64_mingw810 -O C:\Qt
+        7z a -mx1 mingw810.7z C:\Qt
+    - name: release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        artifacts: |
-          vcredist_msvc2019_x86.7z
-          vcredist_msvc2019_x64.7z
-        token: ${{ secrets.GITHUB_TOKEN }}
+        files: |
+          5.15.2.7z
+          5.15.2-Docs.7z
+          mingw810.7z
+
